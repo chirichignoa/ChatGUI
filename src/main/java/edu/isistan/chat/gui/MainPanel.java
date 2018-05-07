@@ -1,11 +1,19 @@
 package edu.isistan.chat.gui;
 
+import edu.isistan.chat.ChatGUI;
+import edu.isistan.chat.ChatMediator;
+import edu.isistan.chat.IChat;
+import edu.isistan.chat.util.MessagesCodes;
+
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
 
-public class MainPanel extends JPanel {
+public class MainPanel extends JPanel{
 
     /**
      * 
@@ -25,10 +33,11 @@ public class MainPanel extends JPanel {
     JList<String> users;
     JTextArea maintxt;
     private List<String> listUsers = new LinkedList<>();
+    private ChatMediator chatMediator;
     /**
      * Create the panel.
      */
-    public MainPanel() {
+    public MainPanel(ChatMediator chatMediator) {
         setLayout(new BorderLayout(0, 0));
         
         JScrollPane scrollPane = new JScrollPane();
@@ -85,7 +94,7 @@ public class MainPanel extends JPanel {
                 int i = users.getSelectedIndex();
                 if (i==-1) 
                     return;
-                MainWindows.launchOrGet(null).chatWith(users.getModel().getElementAt(i));
+                MainWindows.launchOrGet().chatWith(users.getModel().getElementAt(i));
             }
         });
         
@@ -95,12 +104,12 @@ public class MainPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if(!sentMsg.getText().trim().equals("")) {
                     MainWindows.getIChat().sendMsg(sentMsg.getText());
-                    maintxt.setText(maintxt.getText()+"...: "+sentMsg.getText()+"\n");
+                   // maintxt.setText(maintxt.getText()+"...: "+sentMsg.getText()+"\n");
                     sentMsg.setText("");
                 }
             }
         });
-
+        this.chatMediator = chatMediator;
     }
     
     public void remevoUser(String user) {
@@ -118,4 +127,5 @@ public class MainPanel extends JPanel {
     public void addNewMessage(String from, String text) {
         maintxt.setText(maintxt.getText()+from + ": " + text + "\n");
     }
+
 }

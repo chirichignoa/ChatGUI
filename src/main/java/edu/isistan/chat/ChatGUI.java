@@ -7,4 +7,5 @@ public interface ChatGUI {
     public void addUser(String usr);
     public void removeUser(String usr);
     public void chatWith(String usr);
+    public void updateUserList(String[] users );
 }

@@ -15,10 +15,15 @@ public class ChatTest implements IChat {
     public void sendMsg(String to, String text) {
         System.out.println("TO " + to + " TEXT "+text);
     }
-    
+
+    @Override
+    public void registerNewUser(String user) {
+        System.out.println("NEW USER " + user);
+    }
+
     public static void main(String[] args) {
         ChatTest ct = new ChatTest();
-        ChatGUI gui = MainWindows.launchOrGet(ct);
+        ChatGUI gui = MainWindows.launchOrGet();
         Thread t = new Thread(()->{
             try {
              Thread.sleep(5000);
