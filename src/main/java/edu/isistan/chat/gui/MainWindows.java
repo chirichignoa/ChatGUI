@@ -77,7 +77,21 @@ public class MainWindows implements ChatGUI {
         try {
             frame = new JFrame("Supa Duppa Chat!!");
             frame.setBounds(100, 100, 800, 800);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+            frame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    if (JOptionPane.showConfirmDialog(frame,
+                            "Estas seguro de cerrar la ventana?", "Atencion?",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                        log.debug("Cerrando ventana.");
+                        CHAT.removeUser(MainWindows.this.username);
+                        System.exit(0);
+                    }
+                }
+            });
 
             tabbedPane = new JTabbedPane(JTabbedPane.TOP);
             frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -109,21 +123,20 @@ public class MainWindows implements ChatGUI {
 
 
     @Override
-    public void addNewMsg(String from, String text) {
+    public void addNewMsg(String from, String to, String text) {
         EventQueue.invokeLater(()->{
-            if (!from.equals(this.username)) {
-                int tab = -1;
-                for(int i = 0; i < tabbedPane.getTabCount(); i++)
-                    if (tabbedPane.getTitleAt(i).equals(from)) {
-                        tab = i;
-                        break;
-                    }
-                if (tab == -1) {
-                    tabbedPane.addTab(from, new UserPanel(from));
-                    tab = tabbedPane.getTabCount() - 1;
+            String user = from.equals(this.username) ? to : from;
+            int tab = -1;
+            for(int i = 0; i < tabbedPane.getTabCount(); i++)
+                if (tabbedPane.getTitleAt(i).equals(user)) {
+                    tab = i;
+                    break;
                 }
-                ((UserPanel) tabbedPane.getComponent(tab)).addNewMessage(text);
+            if (tab == -1) {
+                tabbedPane.addTab(user, new UserPanel(user));
+                tab = tabbedPane.getTabCount() - 1;
             }
+            ((UserPanel) tabbedPane.getComponent(tab)).addNewMessage(from, text);
         });
     }
 
@@ -159,12 +172,14 @@ public class MainWindows implements ChatGUI {
 
     @Override
     public void chatWith(String user) {
-        EventQueue.invokeLater(()->{
-            for(int i = 0; i < tabbedPane.getTabCount(); i++)
-                if (tabbedPane.getTitleAt(i).equals(user))
-                    return;
-            tabbedPane.addTab(user, new UserPanel(user));
-        });
+        if(!this.username.equals(user)) {
+            EventQueue.invokeLater(() -> {
+                for (int i = 0; i < tabbedPane.getTabCount(); i++)
+                    if (tabbedPane.getTitleAt(i).equals(user))
+                        return;
+                tabbedPane.addTab(user, new UserPanel(user));
+            });
+        }
     }
 
     @Override

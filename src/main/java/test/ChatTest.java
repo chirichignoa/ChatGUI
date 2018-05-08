@@ -21,6 +21,11 @@ public class ChatTest implements IChat {
         System.out.println("NEW USER " + user);
     }
 
+    @Override
+    public void removeUser(String user) {
+        System.out.println("REMOVE USER " + user);
+    }
+
     public static void main(String[] args) {
         ChatTest ct = new ChatTest();
         ChatGUI gui = MainWindows.launchOrGet();
@@ -71,7 +76,7 @@ public class ChatTest implements IChat {
              // TODO Auto-generated catch block
              e.printStackTrace();
          }
-            gui.addNewMsg("pedro", "hola");
+            gui.addNewMsg("pedro","juan", "hola");
          });
         t.start();
 

@@ -1,9 +1,9 @@
 package edu.isistan.chat.gui;
 
-import edu.isistan.chat.ChatGUI;
 import edu.isistan.chat.ChatMediator;
 import edu.isistan.chat.IChat;
-import edu.isistan.chat.util.MessagesCodes;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -11,9 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.JList;
 
 public class MainPanel extends JPanel{
+
+    private static Logger log = LogManager.getLogger(MainPanel.class);
 
     /**
      * 
@@ -104,7 +103,6 @@ public class MainPanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 if(!sentMsg.getText().trim().equals("")) {
                     MainWindows.getIChat().sendMsg(sentMsg.getText());
-                   // maintxt.setText(maintxt.getText()+"...: "+sentMsg.getText()+"\n");
                     sentMsg.setText("");
                 }
             }
@@ -113,6 +111,7 @@ public class MainPanel extends JPanel{
     }
     
     public void remevoUser(String user) {
+        log.debug("Removiendo usuario: " + user);
         listUsers.remove(user);
         users.setListData(listUsers.toArray(new String[listUsers.size()]));
     }
@@ -125,6 +124,7 @@ public class MainPanel extends JPanel{
     }
 
     public void addNewMessage(String from, String text) {
+        log.debug("Seteando nuevo mensaje: " + from + "|" + text);
         maintxt.setText(maintxt.getText()+from + ": " + text + "\n");
     }
 

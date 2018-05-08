@@ -43,11 +43,19 @@ public class ClientThread extends Thread {
             } catch (IOException ex) {
                 log.error("Error al leer del stream de entrada: " + ex.getMessage());
                 connected = false;
+
             } catch (NullPointerException ex) {
                 log.error("El socket no se creo correctamente. ");
                 connected = false;
             }
         }
+        try {
+            dataIn.close();
+            this.socket.close();
+        } catch (IOException e) {
+            log.error("El socket no se cerro correctamente. ");
+        }
+
     }
 
     private void decodeRequest(String request) {
@@ -60,10 +68,13 @@ public class ClientThread extends Thread {
                 this.chatGUI.addNewGeneralMsg(args[1], args[2]); //args[1] contains sender username args[2] contains message
                 break;
             case MessagesCodes.PRIVATE_MESSAGE:
-                this.chatGUI.addNewMsg(args[1], args[2]); //args[1] contains sender username args[2] contains message
+                this.chatGUI.addNewMsg(args[1], args[2], args[3]); //args[1] contains sender username args[2] contains message
                 break;
             case MessagesCodes.GET_USERS:
                 this.chatGUI.updateUserList(args);
+                break;
+            case MessagesCodes.REMOVE_USER:
+                this.chatGUI.removeUser(args[1]);
                 break;
             default:
                 break;

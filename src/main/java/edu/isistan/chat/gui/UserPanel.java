@@ -1,5 +1,8 @@
 package edu.isistan.chat.gui;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -11,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class UserPanel extends JPanel {
+
+    private static Logger log = LogManager.getLogger(UserPanel.class);
 
     /**
      * 
@@ -50,15 +55,15 @@ public class UserPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if(!sentMsg.getText().trim().equals("")) {
                     MainWindows.getIChat().sendMsg(UserPanel.this.user, sentMsg.getText());
-                    maintxt.setText(maintxt.getText()+ UserPanel.this.user + ": "+sentMsg.getText()+"\n");
                     sentMsg.setText("");
                 }
             }
         });
 
     }
-    public void addNewMessage(String text) {
-        maintxt.setText(maintxt.getText()+this.user + ": " + text + "\n");   
+    public void addNewMessage(String from, String text) {
+        log.debug("Seteando mensaje: " + from + "|" + text);
+        maintxt.setText(maintxt.getText()+from + ": " + text + "\n");
     }
 
 }

@@ -35,15 +35,16 @@ public class ChatMediator implements IChat {
             log.debug("Enviando mensaje global: " + message);
             this.dataOut.writeUTF(message);
         } catch (IOException e) {
-            log.error("Error al escribir en el data output.");
+            log.error("Error al enviar mensaje global en el data output.");
         }
     }
 
     @Override
     public void sendMsg(String to, String text) {
         try {
-            //AGREGAR QUIEN LO ENVIA, COMPLETAR EN TODAS
             String message = MessagesCodes.PRIVATE_MESSAGE +
+                    MessagesCodes.SEPARATOR +
+                    this.username +
                     MessagesCodes.SEPARATOR +
                     to +
                     MessagesCodes.SEPARATOR +
@@ -51,7 +52,7 @@ public class ChatMediator implements IChat {
             log.debug("Enviando mensaje privado: " + message);
             this.dataOut.writeUTF(message);
         } catch (IOException e) {
-            log.error("Error al escribir en el data output.");
+            log.error("Error al enviar mensaje privado en el data output.");
         }
     }
 
@@ -63,7 +64,20 @@ public class ChatMediator implements IChat {
                     user;
             this.dataOut.writeUTF(message);
         } catch (IOException e) {
-            log.error("Error al escribir en el data output.");
+            log.error("Error al registrar nuevo usuario en el data output.");
+        }
+    }
+
+    @Override
+    public void removeUser(String user) {
+        try {
+            String message = MessagesCodes.REMOVE_USER +
+                    MessagesCodes.SEPARATOR +
+                    user;
+            log.debug("Eliminando usuario: " + message);
+            this.dataOut.writeUTF(message);
+        } catch (IOException e) {
+            log.error("Error al remover usuario en el data output.");
         }
     }
 }
