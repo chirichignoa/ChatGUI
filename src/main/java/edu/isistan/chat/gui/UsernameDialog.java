@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class UsernameDialog extends JDialog {
 
@@ -15,7 +17,6 @@ public class UsernameDialog extends JDialog {
     private JTextField tfHost;
     private JTextField tfPuerto;
 
-
     public UsernameDialog(JFrame padre) {
         super(padre, "Configuracion inicial", true);
 
@@ -23,10 +24,18 @@ public class UsernameDialog extends JDialog {
         JLabel lbHost = new JLabel("Host:");
         JLabel lbPuerto = new JLabel("Puerto:");
 
+        this.addWindowListener(new WindowAdapter() {
+		    @Override
+		    public void windowClosed(WindowEvent e) {
+		        System.exit(ABORT);
+		    }
+        });
+        
         tfUsuario = new JTextField();
         tfHost = new JTextField("localhost");
         tfPuerto = new JTextField("2525");
 
+        
         JButton btAceptar = new JButton("Aceptar");
         btAceptar.addActionListener(new ActionListener() {
             @Override
@@ -81,7 +90,6 @@ public class UsernameDialog extends JDialog {
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Deshabilita el boton de cierre de la ventana
         this.setVisible(true);
     }
-
 
     public String getUsername(){
         return this.tfUsuario.getText();
