@@ -10,6 +10,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Clase que representa la ventana de configuracion de la aplicacion. La cual permitira inicialmente establecer
+ * el nombre de usuario, el host y el puerto del servidor.
+ */
 public class UsernameDialog extends JDialog {
 
     private static Logger log = LogManager.getLogger(UsernameDialog.class);
@@ -17,8 +21,12 @@ public class UsernameDialog extends JDialog {
     private JTextField tfHost;
     private JTextField tfPuerto;
 
-    public UsernameDialog(JFrame padre) {
-        super(padre, "Configuracion inicial", true);
+    /**
+     * Constructor de la clase.
+     * @param root ventana inicial.
+     */
+    public UsernameDialog(JFrame root) {
+        super(root, "Configuracion inicial", true);
 
         JLabel lbUsuario = new JLabel("Usuario:");
         JLabel lbHost = new JLabel("Host:");
@@ -91,14 +99,26 @@ public class UsernameDialog extends JDialog {
         this.setVisible(true);
     }
 
+    /**
+     * Metodo para obtener el nombre de usuario que se ha ingresado.
+     * @return nombre del usuario.
+     */
     public String getUsername(){
         return this.tfUsuario.getText();
     }
 
+    /**
+     * Metodo para obtener la direccion del servidor que se ha ingresado.
+     * @return direccion del host.
+     */
     public String getHost(){
         return this.tfHost.getText();
     }
 
+    /**
+     * Metodo para obtener el numero de puerto del servidor que se ha ingresado.
+     * @return numero de puerto.
+     */
     public int getPort(){
         return Integer.parseInt(this.tfPuerto.getText());
     }

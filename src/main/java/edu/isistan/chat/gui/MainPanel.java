@@ -20,13 +20,13 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
 
+/**
+ * Clase que representa la ventana principal de la GUI.
+ */
 public class MainPanel extends JPanel{
 
     private static Logger log = LogManager.getLogger(MainPanel.class);
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -5292840943808373776L;
     private JTextField sentMsg;
     JList<String> users;
@@ -109,13 +109,21 @@ public class MainPanel extends JPanel{
         });
         this.chatMediator = chatMediator;
     }
-    
+
+    /**
+     * Logica grafica para remover usuarios.
+     * @param user usuario a remover
+     */
     public void remevoUser(String user) {
         log.debug("Removiendo usuario: " + user);
         listUsers.remove(user);
         users.setListData(listUsers.toArray(new String[listUsers.size()]));
     }
 
+    /**
+     * Logica grafica para añadir usuarios.
+     * @param user usuario a remover
+     */
     public void addUser(String user) {
         if (listUsers.contains(user))
             return;
@@ -123,6 +131,11 @@ public class MainPanel extends JPanel{
         users.setListData(listUsers.toArray(new String[listUsers.size()]));
     }
 
+    /**
+     * Logica grafica para mostrar nuevos mensajes.
+     * @param from nombre de usuario del emisor.
+     * @param text texto que envia.
+     */
     public void addNewMessage(String from, String text) {
         log.debug("Seteando nuevo mensaje: " + from + "|" + text);
         maintxt.setText(maintxt.getText()+from + ": " + text + "\n");

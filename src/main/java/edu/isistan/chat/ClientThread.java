@@ -8,22 +8,36 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * Thread que recibe los mensajes enviados por el servidor y en base a ello ejecuta acciones correspondientes en la GUI
+ * @author Agustin Chirichigno
+ * @author Braian Varona
+ * @version 1.0
+ */
 public class ClientThread extends Thread {
 
     private static Logger log = LogManager.getLogger(ClientThread.class);
 
     private Socket socket;
     private ChatGUI chatGUI;
-    // escuchar peticiones del server, decodificar y accion correspondiente (llamar metodos de chat gui)
 
+    /**
+     * Constructor de la clase.
+     * @param socket socket que mantiene la conexion con el servidor.
+     * @param chatGUI instancia de {@link ChatMediator}, la cual que maneja las conexiones con el servidor.
+     * @see ChatMediator
+     */
     public ClientThread(Socket socket, ChatGUI chatGUI) {
         this.socket = socket;
         this.chatGUI = chatGUI;
     }
 
+    /**
+     * Metodo que contiene la logica para que el thread atienda las peticiones que llegan desde servidor. Consiste en decodificar
+     * la peticion para tomar la accion que corresponda en la GUI.
+     */
     @Override
     public void run() {
-
         DataInputStream dataIn = null;
         String receivedMessage;
         try {
@@ -58,6 +72,10 @@ public class ClientThread extends Thread {
 
     }
 
+    /**
+     * Metodo que decodifica la peticion que recibe y realiza la accion correspondiente de acuerdo al tipo de la misma.
+     * @param request string con la peticion que el cliente envia.
+     */
     private void decodeRequest(String request) {
         String[] args = request.split("\\" + MessagesCodes.SEPARATOR);
         switch (args[0]) {

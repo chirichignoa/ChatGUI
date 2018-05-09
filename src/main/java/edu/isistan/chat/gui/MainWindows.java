@@ -16,6 +16,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.awt.BorderLayout;
 
+/**
+ * Ventana contenedora de los componentes de la GUI.
+ */
 public class MainWindows implements ChatGUI {
 
     private static Logger log = LogManager.getLogger(MainWindows.class);
@@ -37,7 +40,6 @@ public class MainWindows implements ChatGUI {
         return COURRENT;
     }
 
-
     public static IChat getIChat() {
         return CHAT;
     }
@@ -46,7 +48,6 @@ public class MainWindows implements ChatGUI {
      * Launch the application.
      */
     public static void main(String[] args) {
-//        new MainWindows("localhost", 2525);
         MainWindows.launchOrGet();
     }
 
@@ -98,7 +99,6 @@ public class MainWindows implements ChatGUI {
             tabbedPane.add(MAIN, new MainPanel((ChatMediator) CHAT));
 
             UsernameDialog usernameDialog = new UsernameDialog(frame);
-            // aca controlar la entrada
             this.host = usernameDialog.getHost();
             this.port = usernameDialog.getPort();
             this.username = usernameDialog.getUsername();
@@ -113,7 +113,9 @@ public class MainWindows implements ChatGUI {
         }
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addNewGeneralMsg(String from, String text) {
         EventQueue.invokeLater(()->{
@@ -121,7 +123,9 @@ public class MainWindows implements ChatGUI {
         });
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addNewMsg(String from, String to, String text) {
         EventQueue.invokeLater(()->{
@@ -140,7 +144,9 @@ public class MainWindows implements ChatGUI {
         });
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addUser(String user) {
         EventQueue.invokeLater(()->{
@@ -152,7 +158,9 @@ public class MainWindows implements ChatGUI {
         });
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeUser(String user) {
         EventQueue.invokeLater(()->{
@@ -169,7 +177,9 @@ public class MainWindows implements ChatGUI {
         });
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void chatWith(String user) {
         if(!this.username.equals(user)) {
@@ -182,22 +192,13 @@ public class MainWindows implements ChatGUI {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateUserList(String[] users) {
         for (int i = 1; i < users.length ; i++) {
             this.addUser(users[i]);
         }
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public String getUsername() {
-        return username;
     }
 }

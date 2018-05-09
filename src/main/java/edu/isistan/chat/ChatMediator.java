@@ -8,6 +8,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * Clase que se encarga de la comunicacion de un cliente con el servidor.
+ * @author Agustin Chirichigno
+ * @author Braian Varona
+ * @version 1.0
+ */
 public class ChatMediator implements IChat {
 
     private static Logger log = LogManager.getLogger(ChatMediator.class);
@@ -16,6 +22,11 @@ public class ChatMediator implements IChat {
     private DataOutputStream dataOut;
     private String username;
 
+    /**
+     * Constructor de la clase.
+     * @param socket socket que mantiene la conexion con el servidor.
+     * @param username nombre de usuario asociado al cliente.
+     */
     public ChatMediator(Socket socket, String username) {
         this.username = username;
         this.socket = socket;
@@ -26,6 +37,9 @@ public class ChatMediator implements IChat {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sendMsg(String text) {
         try {
@@ -39,6 +53,9 @@ public class ChatMediator implements IChat {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sendMsg(String to, String text) {
         try {
@@ -56,6 +73,9 @@ public class ChatMediator implements IChat {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void registerNewUser(String user) {
         try {
@@ -68,6 +88,9 @@ public class ChatMediator implements IChat {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeUser(String user) {
         try {
