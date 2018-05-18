@@ -53,6 +53,12 @@ public class UsernameDialog extends JDialog {
             }
         });
 
+        this.addWindowListener(new WindowAdapter() {
+            @Override public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
         Container c = this.getContentPane();
         c.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
