@@ -76,7 +76,7 @@ public class MainWindows implements ChatGUI {
         Socket socket;
         // crear socket con el server
         try {
-            frame = new JFrame("Chat Bostero");
+            frame = new JFrame("Supa dupa chat");
             frame.setBounds(100, 100, 800, 800);
             frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
