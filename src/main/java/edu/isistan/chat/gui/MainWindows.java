@@ -23,7 +23,7 @@ public class MainWindows implements ChatGUI {
 
     private static Logger log = LogManager.getLogger(MainWindows.class);
 
-    private static IChat CHAT;
+    private static IChat CHAT = null;
     private static AtomicBoolean LAUNCH = new AtomicBoolean(false);
     private static ChatGUI COURRENT;
     private static String MAIN = "Main";
@@ -76,7 +76,7 @@ public class MainWindows implements ChatGUI {
         Socket socket;
         // crear socket con el server
         try {
-            frame = new JFrame("Supa Duppa Chat!!");
+            frame = new JFrame("Chat Bostero");
             frame.setBounds(100, 100, 800, 800);
             frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 

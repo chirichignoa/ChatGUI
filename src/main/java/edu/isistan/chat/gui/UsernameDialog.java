@@ -32,14 +32,7 @@ public class UsernameDialog extends JDialog {
         JLabel lbHost = new JLabel("Host:");
         JLabel lbPuerto = new JLabel("Puerto:");
 
-        this.addWindowListener(new WindowAdapter() {
-		    @Override
-		    public void windowClosed(WindowEvent e) {
-		        System.exit(ABORT);
-		    }
-        });
-        
-        tfUsuario = new JTextField();
+        tfUsuario = new JTextField("");
         tfHost = new JTextField("localhost");
         tfPuerto = new JTextField("2525");
 
